@@ -1,4 +1,6 @@
 import "./globals.css";
+import "leaflet/dist/leaflet.css";
+
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import Navbar from "@/components/navbar/Navbar";
