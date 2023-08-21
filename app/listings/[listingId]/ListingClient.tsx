@@ -8,7 +8,7 @@ import ListingHead from "@/components/listings/ListingHead";
 import ListingInfo from "@/components/listings/ListingInfo";
 import useLoginModal from "@/hooks/useLoginModal";
 import { useRouter } from "next/navigation";
-import { differenceInCalendarDays, eachDayOfInterval, setDate } from "date-fns";
+import { differenceInCalendarDays, eachDayOfInterval } from "date-fns";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import ListingReservation from "@/components/listings/ListingReservation";
@@ -61,7 +61,7 @@ const ListingClient: React.FC<Props> = ({
     setIsLoading(true);
 
     axios
-      .post("api/reservations", {
+      .post("/api/reservations", {
         totalPrice,
         startDate: dateRange.startDate,
         endDate: dateRange.endDate,
