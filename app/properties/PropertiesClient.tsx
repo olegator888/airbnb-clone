@@ -10,11 +10,11 @@ import { toast } from "react-hot-toast";
 import ListingCard from "@/components/listings/ListingCard";
 
 interface Props {
-  reservations: (Reservation & { listing: Listing })[];
+  listings: Listing[];
   currentUser?: User | null;
 }
 
-const PropertiesClient: React.FC<Props> = ({ reservations, currentUser }) => {
+const TripsClient: React.FC<Props> = ({ listings, currentUser }) => {
   const router = useRouter();
   const [deletingId, setDeletingId] = useState("");
 
@@ -23,9 +23,9 @@ const PropertiesClient: React.FC<Props> = ({ reservations, currentUser }) => {
       setDeletingId(id);
 
       axios
-        .delete(`/api/reservations/${id}`)
+        .delete(`/api/listings/${id}`)
         .then(() => {
-          toast.success("Reservation cancelled");
+          toast.success("Listing deleted");
           router.refresh();
         })
         .catch((error) => toast.error(error?.response?.data?.error))
@@ -36,20 +36,16 @@ const PropertiesClient: React.FC<Props> = ({ reservations, currentUser }) => {
 
   return (
     <Container>
-      <Heading
-        title="Trips"
-        subtitle="Where you've been and where you're going"
-      />
+      <Heading title="Properties" subtitle="List of your properties." />
       <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8">
-        {reservations.map((reservation) => (
+        {listings.map((listing) => (
           <ListingCard
-            key={reservation.id}
-            data={reservation.listing}
-            reservation={reservation}
-            actionId={reservation.id}
+            key={listing.id}
+            data={listing}
             onAction={onCancel}
-            disabled={deletingId === reservation.id}
-            actionLabel="Cancel reservation"
+            disabled={deletingId === listing.id}
+            actionId={listing.id}
+            actionLabel="Delete property"
             currentUser={currentUser}
           />
         ))}
@@ -58,4 +54,4 @@ const PropertiesClient: React.FC<Props> = ({ reservations, currentUser }) => {
   );
 };
 
-export default PropertiesClient;
+export default TripsClient;
